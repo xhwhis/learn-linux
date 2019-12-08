@@ -1,0 +1,2 @@
+#!/bin/bash
+gcc wechat.c common/common.c common/linklist.c -I ./common -lpthread -o wechat
