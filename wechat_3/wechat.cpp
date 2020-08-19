@@ -1,6 +1,7 @@
 #include "head.h"
 #include "common.h"
 #include "linklist.h"
+#include "thread_pool.h"
 
 char value[50] = {0};
 char name[20] = {0};
@@ -116,20 +117,27 @@ int main() {
     }
 
     D(GREEN_HL([Create work pthread!])"\n"); //工作线程:聊天信息发送
-    pthread_t work[ins];
+    /*pthread_t work[ins];
     for (int i = 0; i < ins; i++) {
         pthread_create(&work[i], NULL, print, (void *)linkedlist[i]);
+    }*/
+    haizei::thread_pool tp(ins);
+    tp.start();
+    for (int i = 0; i < ins; i++) {
+        tp.add_one_task(print);
     }
-
     
     D(GREEN_HL([Create heart pthread!])"\n"); // 发送心跳线程
-    pthread_t heart;
-    pthread_create(&heart, NULL, send_heart, (void *)linkedlist);
+    tp.add_one_task(send_heart);
 
+    /*pthread_t heart;
+    pthread_create(&heart, NULL, send_heart, (void *)linkedlist);
+    */
     D(GREEN_HL([Create exchange pthread!])"\n"); // 交换用户列表线程
-    pthread_t echg;
+    tp.add_one_task(echg_list);
+    /*pthread_t echg;
     pthread_create(&echg, NULL, echg_list, (void *)linkedlist);
-    
+    */
     int server_listen, sockfd;
     if ((server_listen = socket_create(port)) < 0) {
         perror("socket_create()");

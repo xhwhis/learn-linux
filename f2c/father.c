@@ -4,7 +4,7 @@ struct Msg *msg;
 
 int main() {
     int shmid;
-    msg = (struct Msg *)get_shm("/home/lws/workspace/v4/", 8731, &shmid);
+    msg = (struct Msg *)get_shm("/home/lws/linux/f2c/", 8731, &shmid);
     if (msg == NULL) {
         exit(1);
     }

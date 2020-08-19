@@ -42,7 +42,7 @@ int socket_connect(int port, char *host) {
     return sockfd;
 }
 
-int get_value(char *pathname, char* key_name, char *value) {
+int get_value(char *pathname, char *key_name, char *value) {
     FILE *fd = NULL;
     char *line = NULL;
     char *substr = NULL;
@@ -66,8 +66,7 @@ int get_value(char *pathname, char* key_name, char *value) {
                 tmp = strlen(value);
                 *(value + tmp - 1) = '\0';
                 break;
-            }
-            else {
+            } else {
                 printf("Next\n");
                 continue;
             }
@@ -103,10 +102,12 @@ bool connect_nonblock(int port, char *host, long timeout) {
             getsockopt(sockfd, SOL_SOCKET, SO_ERROR, &error, (socklen_t *)&len);
             if (error == 0) {
                 ret = true;
+            } else {
+                ret = false;
             }
-            else ret = false;
+        } else {
+            ret = false;
         }
-        else ret = false;
     }
     close(sockfd);
     return ret;

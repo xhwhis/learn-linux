@@ -1,0 +1,3 @@
+#!/bin/bash
+gcc ./client/client.c ./common/common.c -I ./common -lpthread -o ./c
+gcc ./master/master.c ./common/common.c -I ./common -lpthread -o ./m

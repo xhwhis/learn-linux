@@ -9,7 +9,7 @@ int insert(LinkedList head, Node *node) {
     return 0;
 }
 
-int delete(LinkedList head, Node *node) {
+int erase(LinkedList head, Node *node) {
     Node *p = head;
     Node *q = head;
     p->len--;
